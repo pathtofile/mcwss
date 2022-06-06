@@ -6,15 +6,16 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
+	"reflect"
+	"sync"
+
 	"github.com/gorilla/websocket"
 	"github.com/sandertv/mcwss/mctype"
 	"github.com/sandertv/mcwss/protocol"
 	"github.com/sandertv/mcwss/protocol/command"
 	"github.com/sandertv/mcwss/protocol/event"
 	"github.com/yudai/gojsondiff"
-	"log"
-	"reflect"
-	"sync"
 )
 
 // Player is a player connected to the websocket server.
@@ -102,7 +103,7 @@ func (player *Player) Position(f func(position mctype.Position)) {
 	})
 }
 
-// Rotation requests the Y-Rotation (yaw) of a player and calls the function passed when a response is 
+// Rotation requests the Y-Rotation (yaw) of a player and calls the function passed when a response is
 // received, containing the rotation of the player.
 func (player *Player) Rotation(f func(rotation float64)) {
 	player.Exec(command.QueryTargetRequest(mctype.Target(player.name)), func(response *command.QueryTarget) {
@@ -511,19 +512,32 @@ func (player *Player) handleIncomingPacket(packet protocol.Packet) error {
 			callback.Call([]reflect.Value{reflect.ValueOf(commandResponseValue).Elem()})
 		}
 	case *protocol.EventResponse:
+		// Try to update the player's properties to the latest.
 		properties := event.Properties{}
-		if err := json.Unmarshal(body.Properties, &properties); err != nil {
-			return fmt.Errorf("event response: malformed properties JSON: %v", err)
+		if json.Unmarshal(body.Properties, &properties) == nil {
+			player.Properties = properties
 		}
-		// Update the player's properties to the latest.
-		player.Properties = properties
 
-		eventFunc, ok := event.Events[body.EventName]
+		eventName := body.EventName
+		if packet.Header.EventName != "" {
+			eventName = packet.Header.EventName
+		}
+
+		eventFunc, ok := event.Events[eventName]
 		if !ok {
-			return fmt.Errorf("event response: unknown event with name %v", body.EventName)
+			return fmt.Errorf("event response: unknown event with name %v", eventName)
 		}
 		eventData := eventFunc()
-		_ = json.Unmarshal(body.Properties, &eventData)
+		err := json.Unmarshal(body.Properties, &eventData)
+		if err != nil {
+			// Try parsing body as RawMessage
+			packetRawMessage := protocol.PacketRawMessage{}
+			json.Unmarshal(packet.Raw, &packetRawMessage)
+			err := json.Unmarshal(packetRawMessage.Body, &eventData)
+			if err != nil {
+				return fmt.Errorf("event response: failed to unmarshal event %v | %v", eventName, err)
+			}
+		}
 
 		if measurable, ok := eventData.(event.Measurable); ok {
 			// Parse measurements if the event requires them.
@@ -566,10 +580,10 @@ func (player *Player) handleIncomingPacket(packet protocol.Packet) error {
 
 		// Find the handler by the event name.
 		player.Lock()
-		handler, ok := player.handlers[body.EventName]
+		handler, ok := player.handlers[eventName]
 		player.Unlock()
 		if !ok {
-			return fmt.Errorf("event response: unhandled event response for event %v", body.EventName)
+			return fmt.Errorf("event response: unhandled event response for event %v", eventName)
 		}
 		// Finally call the handler with the event data processed.
 		handler(eventData)

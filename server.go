@@ -5,10 +5,11 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"encoding/json"
-	"github.com/gorilla/websocket"
-	"github.com/sandertv/mcwss/protocol"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/websocket"
+	"github.com/sandertv/mcwss/protocol"
 )
 
 // Server is the main entry-point of the mcwss package. It allows interfacing with clients connected to it and
@@ -128,6 +129,7 @@ func (server *Server) handleResponse(writer http.ResponseWriter, request *http.R
 			log.Printf("malformed packet JSON: %v", err)
 			break
 		}
+		packet.Raw = payload
 		// Find the correct body packet for the message purpose.
 		body, found := protocol.Packets[packet.Header.MessagePurpose]
 		if !found {
