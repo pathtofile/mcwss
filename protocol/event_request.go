@@ -2,7 +2,7 @@ package protocol
 
 import (
 	"github.com/google/uuid"
-	"github.com/sandertv/mcwss/protocol/event"
+	"github.com/pathtofile/mcwss/protocol/event"
 )
 
 // EventRequest is sent by the server to request the client to start sending events of a particular type to

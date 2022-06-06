@@ -4,7 +4,8 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
+
+	"github.com/pathtofile/mcwss/mctype"
 )
 
 // QueryTargetRequest produces the command used to query information about a target.

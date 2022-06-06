@@ -2,7 +2,8 @@ package command
 
 import (
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
+
+	"github.com/pathtofile/mcwss/mctype"
 )
 
 // SetBlockRequest produces the command required to place a block in the world of a player. placementMethod

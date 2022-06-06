@@ -2,7 +2,8 @@ package command
 
 import (
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
+
+	"github.com/pathtofile/mcwss/mctype"
 )
 
 // ParticleRequest produces the command required to spawn a particle using a particle name and position.

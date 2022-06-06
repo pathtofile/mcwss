@@ -2,9 +2,10 @@ package mcwss
 
 import (
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
-	"github.com/sandertv/mcwss/protocol/command"
 	"strings"
+
+	"github.com/pathtofile/mcwss/mctype"
+	"github.com/pathtofile/mcwss/protocol/command"
 )
 
 // World represents a world a player has joined. This might be either a singleplayer world, or a multiplayer

@@ -2,7 +2,8 @@ package command
 
 import (
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
+
+	"github.com/pathtofile/mcwss/mctype"
 )
 
 // AgentPositionRequest produces the command used to get the position of a player's agent.

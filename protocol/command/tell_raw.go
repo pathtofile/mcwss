@@ -2,7 +2,8 @@ package command
 
 import (
 	"fmt"
-	"github.com/sandertv/mcwss/mctype"
+
+	"github.com/pathtofile/mcwss/mctype"
 )
 
 // TellRawRequest produces a tell raw command string. The function does not implement logic such as

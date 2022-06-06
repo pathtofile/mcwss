@@ -11,10 +11,10 @@ import (
 	"sync"
 
 	"github.com/gorilla/websocket"
-	"github.com/sandertv/mcwss/mctype"
-	"github.com/sandertv/mcwss/protocol"
-	"github.com/sandertv/mcwss/protocol/command"
-	"github.com/sandertv/mcwss/protocol/event"
+	"github.com/pathtofile/mcwss/mctype"
+	"github.com/pathtofile/mcwss/protocol"
+	"github.com/pathtofile/mcwss/protocol/command"
+	"github.com/pathtofile/mcwss/protocol/event"
 	"github.com/yudai/gojsondiff"
 )
 

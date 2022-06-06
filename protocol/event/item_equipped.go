@@ -1,6 +1,6 @@
 package event
 
-import "github.com/sandertv/mcwss/mctype"
+import "github.com/pathtofile/mcwss/mctype"
 
 // ItemEquipped is sent by the client when it equips an item. This includes armour, elytras, pumpkins and
 // other items that may be worn.

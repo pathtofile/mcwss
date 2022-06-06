@@ -1,6 +1,6 @@
 package protocol
 
-import "github.com/sandertv/mcwss/protocol/event"
+import "github.com/pathtofile/mcwss/protocol/event"
 
 // Header describes the header of a packet. Each packet shares the same header.
 type Header struct {

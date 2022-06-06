@@ -18,14 +18,14 @@ so changing this setting will not have an effect on the behaviour of mcwss.
 ## Getting Started
 
 ### Prerequisites
-mcwss is a Go library. To use it, Go must be installed. The library may be downloaded using `go get github.com/sandertv/mcwss`.
+mcwss is a Go library. To use it, Go must be installed. The library may be downloaded using `go get github.com/pathtofile/mcwss`.
 
 ### Usage
 ```go
 package main
 
 import (
-	"github.com/sandertv/mcwss"
+	"github.com/pathtofile/mcwss"
 )
 
 func main() {
@@ -45,4 +45,4 @@ func main() {
 The server may now be connected to by joining a singleplayer game and executing the command `/connect localhost:8000/ws`.
 
 ### Documentation
-https://godoc.org/github.com/Sandertv/mcwss
+https://godoc.org/github.com/pathtofile/mcwss

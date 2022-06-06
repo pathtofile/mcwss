@@ -2,7 +2,8 @@ package protocol
 
 import (
 	"encoding/json"
-	"github.com/sandertv/mcwss/protocol/event"
+
+	"github.com/pathtofile/mcwss/protocol/event"
 )
 
 // EventResponse is sent by the client. It holds information about a particular event listened on by the

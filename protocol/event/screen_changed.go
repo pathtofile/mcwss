@@ -1,6 +1,6 @@
 package event
 
-import "github.com/sandertv/mcwss/mctype"
+import "github.com/pathtofile/mcwss/mctype"
 
 // Many of the available screen names are listed below. Note that various screens, such as realms error
 // screens, marketplace screens etc. are dynamic and are thus not listed below.

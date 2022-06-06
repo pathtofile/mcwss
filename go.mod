@@ -1,4 +1,4 @@
-module github.com/sandertv/mcwss
+module github.com/pathtofile/mcwss
 
 require (
 	github.com/google/uuid v1.1.0
